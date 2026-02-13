@@ -1,0 +1,271 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "GODMODE (Beta) — Frontend shell, authenticated session flow, dashboards, and disclosure",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Create the GODMODE (Beta) app shell with a distinctive, consistent visual theme (non blue/purple) and English-only UI text.",
+      "acceptanceCriteria": [
+        "App loads to a branded GODMODE (Beta) landing/home experience with consistent styling across pages",
+        "All visible UI text is in English",
+        "Primary palette is not the typical blue/purple default (unless explicitly justified by the theme)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global styles and theme tokens (colors/typography/spacing) for a distinctive GODMODE look that avoids default blue/purple; define app-wide layout primitives and utility classes while keeping all user-facing text in English."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Adjust Tailwind theme extensions (e.g., chart colors and semantic tokens) to match the GODMODE palette and ensure consistent styling across all screens."
+        },
+        {
+          "path": "frontend/public/assets/generated/godmode-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated app logo asset at the specified path so it can be used by the header and landing sections."
+        },
+        {
+          "path": "frontend/public/assets/generated/godmode-hero-bg.dim_1920x1080.png",
+          "operation": "create",
+          "description": "Add the generated wide hero background asset at the specified path for branded landing/home visuals."
+        },
+        {
+          "path": "frontend/public/assets/generated/godmode-icons-set.dim_1024x1024.png",
+          "operation": "create",
+          "description": "Add the generated monochrome icon set image at the specified path for UI iconography usage."
+        },
+        {
+          "path": "frontend/src/components/AppShell.tsx",
+          "operation": "create",
+          "description": "Create the shared app shell (header + nav + main content layout) that applies the GODMODE theme consistently and surfaces the brand (using frontend/public/assets/generated/godmode-logo.dim_512x512.png and frontend/public/assets/generated/godmode-hero-bg.dim_1920x1080.png)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Add Internet Identity sign-in/out, display authenticated state, and gate session creation/viewing behind authentication.",
+      "acceptanceCriteria": [
+        "User can sign in with Internet Identity and sign out",
+        "When signed out, user cannot create a new GODMODE session and is prompted to sign in",
+        "When signed in, user can create and view their sessions"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AuthButton.tsx",
+          "operation": "create",
+          "description": "Implement a login/logout control using the selected authorization component approach (useInternetIdentity + react-query cache clearing). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AuthGate.tsx",
+          "operation": "create",
+          "description": "Create an auth gating wrapper that blocks protected screens (New Session, Session Detail, Context Scan, user sessions list) when signed out and shows an English sign-in prompt. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUser.ts",
+          "operation": "create",
+          "description": "Add a small hook that derives isAuthenticated from useInternetIdentity, fetches getCallerUserRole/getCallerUserProfile via useActor + react-query, and exposes a clean UI state (loading/error/authenticated). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/AppShell.tsx",
+          "operation": "modify",
+          "description": "Wire authenticated state into the app shell (show signed in vs signed out, show AuthButton, and disable/hide protected navigation items for signed-out users). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement the Outcome Session flow: create a session with outcome + optional parameters and show recommendations; persist and revisit sessions.",
+      "acceptanceCriteria": [
+        "User can create a new session with an outcome string and optional parameters",
+        "Session view displays the outcome, session start time, and a list of recommended micro-adjustments (e.g., timing, route, clothing cue, location, duration)",
+        "Sessions persist and can be revisited after refresh"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useSessions.ts",
+          "operation": "create",
+          "description": "Create react-query hooks for listing the signed-in user's sessions (getUserSessions) and reading a single session (getSession) through useActor, including loading/error states."
+        },
+        {
+          "path": "frontend/src/pages/NewSessionPage.tsx",
+          "operation": "create",
+          "description": "Build the New Session screen: outcome text input, optional time horizon and risk tolerance selectors, and a start action that calls createOutcomeSession, then navigates to Session Detail."
+        },
+        {
+          "path": "frontend/src/pages/SessionDetailPage.tsx",
+          "operation": "create",
+          "description": "Build the Session Detail screen: display outcome, created time, parameters, and the saved recommendations list with explanation per item; include a regenerate action that calls generateRecommendations (and refetches the session)."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "create",
+          "description": "Create the branded Home/Landing experience: show hero area, brief app description, and (when signed in) a list of the user's sessions with links into Session Detail; (when signed out) show a sign-in CTA."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add a Context Scan screen to collect proxy signals and attach the latest snapshot to the active session; allow regeneration after updates.",
+      "acceptanceCriteria": [
+        "User can enter/update context values for a session",
+        "Session details show the latest saved context snapshot with a timestamp",
+        "Recommendations can be regenerated after context changes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ContextScanPage.tsx",
+          "operation": "create",
+          "description": "Create the Context Scan screen: form fields for stress level, mood, social energy, manual weather, manual crowd density, and notes; submit calls addContextScan for the selected session and navigates back to Session Detail."
+        },
+        {
+          "path": "frontend/src/pages/SessionDetailPage.tsx",
+          "operation": "modify",
+          "description": "Extend Session Detail to show the latest saved context snapshot (values + timestamp derived from session data) and provide a clear link to edit/update context via Context Scan."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Add an Event Drift dashboard section on Session Detail with four probability categories and a trajectory control that updates after regeneration/setting changes.",
+      "acceptanceCriteria": [
+        "Session view includes an Event Drift section with the four probability categories and a trajectory control",
+        "Probabilities sum to ~100% (allowing minor rounding) and are visually clear",
+        "Probabilities change in a noticeable way when context or Inject Uncertainty changes and the user regenerates"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/EventDriftPanel.tsx",
+          "operation": "create",
+          "description": "Create an Event Drift UI module that renders average/unusual/high-impact/life-altering values and a single trajectory slider/control bound to the session's eventDrift.currentTrajectory, including a clear sum-to-~100% presentation."
+        },
+        {
+          "path": "frontend/src/pages/SessionDetailPage.tsx",
+          "operation": "modify",
+          "description": "Wire EventDriftPanel into Session Detail and ensure its display refreshes after recommendations are regenerated and/or Inject Uncertainty is toggled."
+        },
+        {
+          "path": "frontend/src/components/UncertaintyToggle.tsx",
+          "operation": "create",
+          "description": "Add an 'Inject Uncertainty' toggle control used by Session Detail to call generateRecommendations(sessionId, injectUncertainty) and trigger UI refreshes; keep behavior deterministic from the user's perspective (stable until explicit regenerate)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Display per-user Probability Debt level, threshold warnings, and trade-off indicators that update as debt changes.",
+      "acceptanceCriteria": [
+        "Backend maintains a Probability Debt score per authenticated user",
+        "UI shows current debt level and at least one warning threshold state (e.g., Normal / Elevated / Critical)",
+        "UI shows trade-off indicators that update as debt changes (values can be heuristic but must be consistent and explainable)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ProbabilityDebtPanel.tsx",
+          "operation": "create",
+          "description": "Create a Probability Debt panel that reads probabilityDebt from the current UserProfile and renders (1) level number, (2) threshold state (Normal/Elevated/Critical), and (3) trade-off indicators (e.g., Career vs Burnout/Relationship Strain) derived consistently from debt and current context fields."
+        },
+        {
+          "path": "frontend/src/pages/SessionDetailPage.tsx",
+          "operation": "modify",
+          "description": "Include ProbabilityDebtPanel on Session Detail so users see debt impact while regenerating guidance and updating context."
+        },
+        {
+          "path": "frontend/src/pages/SettingsAboutPage.tsx",
+          "operation": "create",
+          "description": "Show Probability Debt in Settings/About as part of the user's profile overview to reinforce the trade-off framing and warnings."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add Timeline Fracture prototype UI: user city/region field + public aggregate dashboard of uncertainty activations by city/region with collective effect readouts.",
+      "acceptanceCriteria": [
+        "Users can set a city/region in their profile or session settings",
+        "Toggling Inject Uncertainty updates a backend aggregate counter for that city/region",
+        "A Timeline Fracture dashboard lists cities/regions with current counts and shows a generated ‘collective effect’ summary per city/region",
+        "No personal user identities are exposed in the public aggregate view"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/TimelineFracturePage.tsx",
+          "operation": "create",
+          "description": "Create the public Timeline Fracture dashboard screen that lists city/region aggregates and shows a non-identifying 'collective effect' summary per row (traffic anomalies/stock volatility/social collisions/viral moments/unplanned gatherings)."
+        },
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Extend the typed frontend backend interface to include the Timeline Fracture aggregate read capability and uncertainty-toggle tracking capability needed by the Timeline Fracture UI (keeping public aggregate data non-identifying)."
+        },
+        {
+          "path": "frontend/src/components/UncertaintyToggle.tsx",
+          "operation": "modify",
+          "description": "When the Inject Uncertainty toggle is changed, also invoke the backend capability responsible for updating the city/region aggregate counter (using the user's saved city/region), without exposing any personal identity in the public dashboard."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add clear in-app disclosure text about speculative nature, no guarantees, and proxy-only context inputs; visible on first run and accessible later.",
+      "acceptanceCriteria": [
+        "Disclosure is visible at least on onboarding/first-run and accessible later (e.g., in Settings/About)",
+        "Disclosure explicitly states: no guarantees; recommendations are prompts; context inputs are user-provided proxies in this build"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/DisclosureBlock.tsx",
+          "operation": "create",
+          "description": "Create a reusable disclosure block with English-only text stating: speculative prototype; no guaranteed outcomes; recommendations are behavioral prompts/probabilistic framing; context inputs are user-provided proxies (no real biometrics/camera/social scraping in this build)."
+        },
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Show the disclosure prominently on the landing/first-run experience (e.g., below hero/CTA) to satisfy onboarding visibility."
+        },
+        {
+          "path": "frontend/src/pages/SettingsAboutPage.tsx",
+          "operation": "modify",
+          "description": "Include the disclosure in Settings/About for persistent access later."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Implement frontend navigation with required screens and proper wiring, including loading/error states and session identifier handling.",
+      "acceptanceCriteria": [
+        "All listed screens are reachable via a clear navigation pattern (header, sidebar, or tab-like nav)",
+        "Session-related screens correctly pass the session identifier and load data from the backend",
+        "UI handles loading and error states (e.g., failed fetch, not signed in)"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the main app router wiring: routes for Home/Landing, New Session, Session Detail, Context Scan, Timeline Fracture dashboard, and Settings/About; wrap protected routes in AuthGate and render AppShell consistently."
+        },
+        {
+          "path": "frontend/src/components/AppShell.tsx",
+          "operation": "modify",
+          "description": "Add clear navigation (header/sidebar/tab-like) to all required screens, ensuring session-related links carry the session identifier and signed-out state is handled gracefully."
+        },
+        {
+          "path": "frontend/src/pages/SettingsAboutPage.tsx",
+          "operation": "modify",
+          "description": "Add a simple profile editor section for city/region/preferences (saveCallerUserProfile) plus About/disclosure; handle loading/error states for profile fetch/save."
+        },
+        {
+          "path": "frontend/src/components/LoadingState.tsx",
+          "operation": "create",
+          "description": "Create a shared loading UI component for consistent skeleton/spinner presentation across screens."
+        },
+        {
+          "path": "frontend/src/components/ErrorState.tsx",
+          "operation": "create",
+          "description": "Create a shared error UI component to display English error messages (including authorization failures) and offer recovery actions (retry, sign in). Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

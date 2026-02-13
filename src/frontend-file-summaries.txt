@@ -1,0 +1,22 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, route definitions for all pages (home, new session, session detail, context scan, timeline fracture, settings), and theme provider configuration.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including user profile management, session CRUD operations, context scanning, and recommendation generation with proper cache invalidation.",
+  "frontend/src/hooks/useCurrentUser.ts": "Custom hook that combines Internet Identity authentication state with user profile data to provide a unified current user context.",
+  "frontend/src/components/AppShell.tsx": "Application shell component providing consistent header with logo/navigation, mobile-responsive menu, authentication button, and footer with attribution.",
+  "frontend/src/components/AuthButton.tsx": "Authentication control button that handles Internet Identity login/logout with proper loading states and query cache clearing.",
+  "frontend/src/components/AuthGate.tsx": "Higher-order component that protects routes by requiring authentication and displays a sign-in prompt for unauthenticated users.",
+  "frontend/src/components/LoadingState.tsx": "Reusable loading skeleton component for consistent loading UI across the application.",
+  "frontend/src/components/ErrorState.tsx": "Reusable error display component with retry functionality and consistent error messaging.",
+  "frontend/src/components/DisclosureBlock.tsx": "Disclosure component explaining GODMODE's speculative nature, lack of guarantees, and proxy-only context inputs.",
+  "frontend/src/components/EventDriftPanel.tsx": "Displays probability distribution across four outcome categories (average/unusual/high-impact/life-altering) with current trajectory visualization.",
+  "frontend/src/components/ProbabilityDebtPanel.tsx": "Shows user's probability debt level with threshold warnings (Normal/Elevated/Critical) and trade-off indicators for career/burnout/relationships.",
+  "frontend/src/components/UncertaintyToggle.tsx": "Toggle control for \"Inject Uncertainty\" feature with descriptive label and icon.",
+  "frontend/src/pages/HomePage.tsx": "Landing page with hero section, disclosure, user sessions list, and feature overview cards; uses type-safe navigation with params property for dynamic routes.",
+  "frontend/src/pages/NewSessionPage.tsx": "Form page for creating new outcome sessions with outcome text input, time horizon selector, and risk tolerance selector; uses type-safe navigation with params property after session creation.",
+  "frontend/src/pages/SessionDetailPage.tsx": "Detailed session view displaying outcome, context scan status, uncertainty toggle, recommendations list, event drift panel, and probability debt panel with regeneration capability; uses type-safe navigation with params property.",
+  "frontend/src/pages/ContextScanPage.tsx": "Form page for adding/updating context scan data with sliders for stress/mood/social energy and selectors for weather/crowd density; uses type-safe navigation with params property.",
+  "frontend/src/pages/TimelineFracturePage.tsx": "Public dashboard showing aggregate uncertainty injection by city/region with collective effect indicators (mock data for prototype).",
+  "frontend/src/pages/SettingsAboutPage.tsx": "Settings page with profile editor (city/region/preferences), probability debt display, and comprehensive about/disclosure section.",
+  "frontend/src/index.css": "Global styles with monochrome OKLCH color system featuring stark black/white contrast in dark mode, avoiding typical blue/purple defaults.",
+  "frontend/tailwind.config.js": "Tailwind configuration with Inter font family and extended theme tokens matching the monochrome design system."
+}

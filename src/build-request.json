@@ -1,0 +1,249 @@
+{
+  "kind": "build_request",
+  "title": "Build GODMODE (Beta) prototype: outcome sessions, probability dashboard, and uncertainty mechanics",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the GODMODE (Beta) app shell with a coherent, distinctive visual theme applied consistently across all screens (colors, typography, spacing, components), avoiding a blue/purple default palette, and using English for all user-facing text.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2",
+          "msg-3"
+        ],
+        "quotes": [
+          "📱 App Name: GODMODE (Beta)",
+          "Create the application"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App loads to a branded GODMODE (Beta) landing/home experience with consistent styling across pages",
+        "All visible UI text is in English",
+        "Primary palette is not the typical blue/purple default (unless explicitly justified by the theme)"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add Internet Identity sign-in/out and show the authenticated user state in the UI (signed out vs signed in), gating creation/viewing of sessions behind authentication.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Create the application"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can sign in with Internet Identity and sign out",
+        "When signed out, user cannot create a new GODMODE session and is prompted to sign in",
+        "When signed in, user can create and view their sessions"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement the core “Outcome Session” flow: user enters a desired outcome (free text), selects optional parameters (time horizon, risk tolerance), and starts a session that generates and displays a list of recommended micro-adjustments.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2",
+          "msg-3"
+        ],
+        "quotes": [
+          "You input a desired outcome:",
+          "The app doesn’t guarantee it.",
+          "Then suggests micro-adjustments that subtly increase odds.",
+          "Create the application"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can create a new session with an outcome string and optional parameters",
+        "Session view displays the outcome, session start time, and a list of recommended micro-adjustments (e.g., timing, route, clothing cue, location, duration)",
+        "Sessions persist and can be revisited after refresh"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add a “Context Scan” screen/module that collects user-provided proxy signals (since real sensor and camera integrations are not available in this template): stress level, mood, social energy, weather (manual), crowd density (manual), and a free-form notes field; attach the captured context snapshot to the active session.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "It scans the current probability field.",
+          "It uses: • ... • Your bio-stress levels ... • Weather pattern psychology"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can enter/update context values for a session",
+        "Session details show the latest saved context snapshot with a timestamp",
+        "Recommendations can be regenerated after context changes"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement the “Recommendation Engine” as a deterministic + stochastic generator that uses (a) the outcome text, (b) context snapshot, and (c) an “Inject Uncertainty” setting to produce micro-adjustments; store the generated recommendations and an explanation string for each recommendation in the session.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Then suggests micro-adjustments that subtly increase odds.",
+          "You can toggle: “Inject Uncertainty.” This increases exposure to randomness."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend generates a list of recommendations with: type, instruction text, and a short rationale/explanation",
+        "Changing Inject Uncertainty changes the distribution/variance of recommendations (more unusual/less safe suggestions when enabled)",
+        "Recommendations are saved with the session so the same session view remains stable unless user explicitly regenerates"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Create the “Event Drift” dashboard for a session, showing a live-style probability breakdown/trajectory (e.g., average week %, unusual %, high-impact %, life-altering %) and a single primary slider/control to represent the current trajectory state; values must be generated from session/context and update when the user regenerates or changes settings.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "The app displays a live probability slider:",
+          "62% chance your week is average ... 0.3% chance of a life-altering encounter"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Session view includes an Event Drift section with the four probability categories and a trajectory control",
+        "Probabilities sum to ~100% (allowing minor rounding) and are visually clear",
+        "Probabilities change in a noticeable way when context or Inject Uncertainty changes and the user regenerates"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add “Reality Pressure / Probability Debt” tracking per user: each time a user regenerates guidance or repeatedly pushes toward low-probability/high-impact outcomes (based on the generated Event Drift distribution and Inject Uncertainty), increase a Probability Debt score; show warnings and simple trade-off indicators (e.g., career vs burnout/relationship strain) derived from debt and context.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "The Darker Mode: “Reality Pressure”",
+          "Probability Debt Increasing.",
+          "It shows trade-offs in real time."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend maintains a Probability Debt score per authenticated user",
+        "UI shows current debt level and at least one warning threshold state (e.g., Normal / Elevated / Critical)",
+        "UI shows trade-off indicators that update as debt changes (values can be heuristic but must be consistent and explainable)"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Implement a “Timeline Fracture” prototype: when users toggle Inject Uncertainty, record an aggregate count by a user-provided ‘city/region’ field; show a public (non-identifying) dashboard of current aggregate uncertainty activation per city/region and a generated ‘collective effect’ readout (traffic anomalies/stock volatility/social collisions/viral moments/unplanned gatherings).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Timeline Fracture",
+          "If enough users in one city toggle “Inject Uncertainty” at the same time, the app predicts: • Stock volatility spikes • Traffic anomalies ..."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can set a city/region in their profile or session settings",
+        "Toggling Inject Uncertainty updates a backend aggregate counter for that city/region",
+        "A Timeline Fracture dashboard lists cities/regions with current counts and shows a generated ‘collective effect’ summary per city/region",
+        "No personal user identities are exposed in the public aggregate view"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Add clear in-app disclosure text explaining that GODMODE is a speculative/prototype experience that provides behavioral prompts and probabilistic framing, does not guarantee outcomes, and uses user-entered proxy context (no real biometric/camera/social scraping in this build).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "The app doesn’t guarantee it.",
+          "You can’t prove it."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Disclosure is visible at least on onboarding/first-run and accessible later (e.g., in Settings/About)",
+        "Disclosure explicitly states: no guarantees; recommendations are prompts; context inputs are user-provided proxies in this build"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Implement basic data model + persistence for: user profile (city/region, preferences), sessions (outcome, parameters, context snapshots, recommendations, Event Drift probabilities), and user Probability Debt, all stored in the single Motoko actor.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Create the application"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Data persists across refreshes for an authenticated user",
+        "User can list past sessions and open a session detail view",
+        "All stored data stays within the single-actor backend architecture"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Frontend navigation: provide screens for (1) Home/Landing, (2) New Session, (3) Session Detail (recommendations + Event Drift), (4) Context Scan, (5) Timeline Fracture dashboard, and (6) Settings/About (city/region + disclosure).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ],
+        "quotes": [
+          "Create the application"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All listed screens are reachable via a clear navigation pattern (header, sidebar, or tab-like nav)",
+        "Session-related screens correctly pass the session identifier and load data from the backend",
+        "UI handles loading and error states (e.g., failed fetch, not signed in)"
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in the main actor file).",
+    "Do not edit files under frontend immutable paths: frontend/src/hooks/useInternetIdentity.ts, frontend/src/hooks/useInternetIdentity.tsx, frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui; compose them instead.",
+    "Use English for all user-facing text.",
+    "Do not implement real biometric sensor ingestion, camera-based micro-expression detection, conversation tone analysis, or third-party social media APIs in this build; use user-entered proxy inputs only."
+  ],
+  "nonGoals": [
+    "Building a real-world ‘probability manipulation’ system or claiming real outcome guarantees",
+    "Integrating external databases or cloud services",
+    "Real-time features (WebSockets/push)",
+    "Third-party authentication beyond Internet Identity",
+    "Direct integrations with wearable devices, device sensors, or camera-based analysis in this initial build"
+  ],
+  "imageRequirements": {
+    "required": [
+      "App logo mark: abstract ‘probability distortion’ sigil, high-contrast, minimal (godmode-logo.dim_512x512.png)",
+      "Wide hero background: dark cinematic gradient with subtle noise + faint grid/wave interference pattern (godmode-hero-bg.dim_1920x1080.png)",
+      "Set of 6 monochrome UI icons (slider, spark/uncertainty, warning/debt, map/city, compass/route, clock/timing) (godmode-icons-set.dim_1024x1024.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

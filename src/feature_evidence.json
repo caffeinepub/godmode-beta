@@ -1,0 +1,195 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-the-godmode-beta-app-shell-with-a-coherent-distinctive-visual-theme-applied-consistently-across-all-screens-colors-typography-spacing-components-avoiding-a-blue-purple-default-palette-and-using-english-for-all-user-facing-text",
+      "featureTitle": "Create the GODMODE (Beta) app shell with a coherent, distinctive visual theme applied consistently across all screens (colors, typography, spacing, components), avoiding a blue/purple default palette, and using English for all user-facing text.",
+      "files": [
+        "frontend/src/components/AppShell.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-internet-identity-sign-in-out-and-show-the-authenticated-user-state-in-the-ui-signed-out-vs-signed-in-gating-creation-viewing-of-sessions-behind-authentication",
+      "featureTitle": "Add Internet Identity sign-in/out and show the authenticated user state in the UI (signed out vs signed in), gating creation/viewing of sessions behind authentication.",
+      "files": [
+        "frontend/src/components/AppShell.tsx",
+        "frontend/src/components/AuthButton.tsx",
+        "frontend/src/components/AuthGate.tsx",
+        "frontend/src/hooks/useCurrentUser.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-core-outcome-session-flow-user-enters-a-desired-outcome-free-text-selects-optional-parameters-time-horizon-risk-tolerance-and-starts-a-session-that-generates-and-displays-a-list-of-recommended-micro-adjustments",
+      "featureTitle": "Implement the core “Outcome Session” flow: user enters a desired outcome (free text), selects optional parameters (time horizon, risk tolerance), and starts a session that generates and displays a list of recommended micro-adjustments.",
+      "files": [
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/NewSessionPage.tsx",
+        "frontend/src/pages/SessionDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-context-scan-screen-module-that-collects-user-provided-proxy-signals-since-real-sensor-and-camera-integrations-are-not-available-in-this-template-stress-level-mood-social-energy-weather-manual-crowd-density-manual-and-a-free-form-notes-field-attach-the-captured-context-snapshot-to-the-active-session",
+      "featureTitle": "Add a “Context Scan” screen/module that collects user-provided proxy signals (since real sensor and camera integrations are not available in this template): stress level, mood, social energy, weather (manual), crowd density (manual), and a free-form notes field; attach the captured context snapshot to the active session.",
+      "files": [
+        "frontend/src/pages/ContextScanPage.tsx",
+        "frontend/src/pages/SessionDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-the-event-drift-dashboard-for-a-session-showing-a-live-style-probability-breakdown-trajectory-e-g-average-week-unusual-high-impact-life-altering-and-a-single-primary-slider-control-to-represent-the-current-trajectory-state-values-must-be-generated-from-session-context-and-update-when-the-user-regenerates-or-changes-settings",
+      "featureTitle": "Create the “Event Drift” dashboard for a session, showing a live-style probability breakdown/trajectory (e.g., average week %, unusual %, high-impact %, life-altering %) and a single primary slider/control to represent the current trajectory state; values must be generated from session/context and update when the user regenerates or changes settings.",
+      "files": [
+        "frontend/src/components/EventDriftPanel.tsx",
+        "frontend/src/components/UncertaintyToggle.tsx",
+        "frontend/src/pages/SessionDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-reality-pressure-probability-debt-tracking-per-user-each-time-a-user-regenerates-guidance-or-repeatedly-pushes-toward-low-probability-high-impact-outcomes-based-on-the-generated-event-drift-distribution-and-inject-uncertainty-increase-a-probability-debt-score-show-warnings-and-simple-trade-off-indicators-e-g-career-vs-burnout-relationship-strain-derived-from-debt-and-context",
+      "featureTitle": "Add “Reality Pressure / Probability Debt” tracking per user: each time a user regenerates guidance or repeatedly pushes toward low-probability/high-impact outcomes (based on the generated Event Drift distribution and Inject Uncertainty), increase a Probability Debt score; show warnings and simple trade-off indicators (e.g., career vs burnout/relationship strain) derived from debt and context.",
+      "files": [
+        "frontend/src/components/ProbabilityDebtPanel.tsx",
+        "frontend/src/pages/SessionDetailPage.tsx",
+        "frontend/src/pages/SettingsAboutPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-timeline-fracture-prototype-when-users-toggle-inject-uncertainty-record-an-aggregate-count-by-a-user-provided-city-region-field-show-a-public-non-identifying-dashboard-of-current-aggregate-uncertainty-activation-per-city-region-and-a-generated-collective-effect-readout-traffic-anomalies-stock-volatility-social-collisions-viral-moments-unplanned-gatherings",
+      "featureTitle": "Implement a “Timeline Fracture” prototype: when users toggle Inject Uncertainty, record an aggregate count by a user-provided ‘city/region’ field; show a public (non-identifying) dashboard of current aggregate uncertainty activation per city/region and a generated ‘collective effect’ readout (traffic anomalies/stock volatility/social collisions/viral moments/unplanned gatherings).",
+      "files": [
+        "frontend/src/components/UncertaintyToggle.tsx",
+        "frontend/src/pages/TimelineFracturePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-clear-in-app-disclosure-text-explaining-that-godmode-is-a-speculative-prototype-experience-that-provides-behavioral-prompts-and-probabilistic-framing-does-not-guarantee-outcomes-and-uses-user-entered-proxy-context-no-real-biometric-camera-social-scraping-in-this-build",
+      "featureTitle": "Add clear in-app disclosure text explaining that GODMODE is a speculative/prototype experience that provides behavioral prompts and probabilistic framing, does not guarantee outcomes, and uses user-entered proxy context (no real biometric/camera/social scraping in this build).",
+      "files": [
+        "frontend/src/components/DisclosureBlock.tsx",
+        "frontend/src/pages/HomePage.tsx",
+        "frontend/src/pages/SettingsAboutPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-navigation-provide-screens-for-1-home-landing-2-new-session-3-session-detail-recommendations-event-drift-4-context-scan-5-timeline-fracture-dashboard-and-6-settings-about-city-region-disclosure",
+      "featureTitle": "Frontend navigation: provide screens for (1) Home/Landing, (2) New Session, (3) Session Detail (recommendations + Event Drift), (4) Context Scan, (5) Timeline Fracture dashboard, and (6) Settings/About (city/region + disclosure).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/AppShell.tsx",
+        "frontend/src/components/ErrorState.tsx",
+        "frontend/src/components/LoadingState.tsx",
+        "frontend/src/pages/SettingsAboutPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

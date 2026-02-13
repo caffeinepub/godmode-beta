@@ -1,0 +1,74 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-13T08:39:04.502Z",
+  "summary": "The diff adds a new Motoko backend actor and a new React/TanStack Router frontend with an app shell, auth gating, session creation, context scan UI, and UI panels for Event Drift and Probability Debt. However, based on visible code, several required data fields/behaviors are either missing or cannot be confirmed from the truncated/omitted portions—most notably: context snapshot timestamping, recommendation typing/rationales format, and some backend mechanics (uncertainty aggregates, probability debt updates, persistence) are not evidenced.",
+  "missing_requirements": [
+    {
+      "id": "REQ-4",
+      "requirement": "Context Scan snapshot saved with a timestamp and shown in session details.",
+      "reason": "The backend ContextScanSnapshot type shown has no timestamp field, and OutcomeSession stores only `contextScan : ?ContextScanSnapshot` with no associated saved-at time visible. This makes it impossible (from the shown code) to satisfy the AC requiring the latest saved context snapshot to include a timestamp.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Recommendations must include: type, instruction text, and a short rationale/explanation; and be stored in-session.",
+      "reason": "The backend `Recommendation` type shown only contains `adjustment : Text` and `explanation : Text` and does not include a `type` field as required by the acceptance criteria.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Admin/authorization system with secret-token initialization (`_initializeAccessControlWithSecret`) and role/permission checks (e.g., `#user`, admin).",
+      "reason": "The BuildRequest requires Internet Identity gating but does not request an additional admin-token-based access control system or secret URL parameter for initialization.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Caffeine referral footer link and branding-specific tracking parameters.",
+      "reason": "Not requested by the BuildRequest requirements or acceptance criteria; appears to be extra template/telemetry branding behavior.",
+      "evidence": [
+        "frontend/src/components/AppShell.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppShell.tsx",
+    "frontend/src/components/AuthButton.tsx",
+    "frontend/src/components/AuthGate.tsx",
+    "frontend/src/components/DisclosureBlock.tsx",
+    "frontend/src/components/ErrorState.tsx",
+    "frontend/src/components/EventDriftPanel.tsx",
+    "frontend/src/components/LoadingState.tsx",
+    "frontend/src/components/ProbabilityDebtPanel.tsx",
+    "frontend/src/components/UncertaintyToggle.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useCurrentUser.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/ContextScanPage.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/NewSessionPage.tsx",
+    "frontend/src/pages/SessionDetailPage.tsx",
+    "frontend/src/pages/SettingsAboutPage.tsx",
+    "frontend/src/pages/TimelineFracturePage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

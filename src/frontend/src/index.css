@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+        
+        /* Monochrome base with subtle warmth */
+        --background: 0.98 0.005 0;
+        --foreground: 0.15 0.01 0;
+        
+        --card: 1 0 0;
+        --card-foreground: 0.15 0.01 0;
+        
+        --popover: 1 0 0;
+        --popover-foreground: 0.15 0.01 0;
+        
+        /* Sharp black primary for high contrast */
+        --primary: 0.2 0.015 0;
+        --primary-foreground: 0.99 0 0;
+        
+        --secondary: 0.95 0.005 0;
+        --secondary-foreground: 0.2 0.015 0;
+        
+        --muted: 0.96 0.005 0;
+        --muted-foreground: 0.5 0.01 0;
+        
+        --accent: 0.94 0.008 0;
+        --accent-foreground: 0.2 0.015 0;
+        
+        --destructive: 0.55 0.22 25;
+        --destructive-foreground: 0.99 0 0;
+        
+        --border: 0.9 0.005 0;
+        --input: 0.9 0.005 0;
+        --ring: 0.5 0.01 0;
+        
+        /* Chart colors - monochrome with subtle differentiation */
+        --chart-1: 0.35 0.02 0;
+        --chart-2: 0.5 0.015 0;
+        --chart-3: 0.65 0.01 0;
+        --chart-4: 0.25 0.025 0;
+        --chart-5: 0.75 0.008 0;
+    }
+
+    .dark {
+        /* Deep black background for dramatic effect */
+        --background: 0.12 0.01 0;
+        --foreground: 0.98 0.005 0;
+        
+        --card: 0.16 0.012 0;
+        --card-foreground: 0.98 0.005 0;
+        
+        --popover: 0.14 0.012 0;
+        --popover-foreground: 0.98 0.005 0;
+        
+        /* Bright white primary for stark contrast */
+        --primary: 0.95 0.005 0;
+        --primary-foreground: 0.12 0.01 0;
+        
+        --secondary: 0.22 0.015 0;
+        --secondary-foreground: 0.95 0.005 0;
+        
+        --muted: 0.25 0.015 0;
+        --muted-foreground: 0.6 0.01 0;
+        
+        --accent: 0.28 0.018 0;
+        --accent-foreground: 0.98 0.005 0;
+        
+        --destructive: 0.6 0.24 25;
+        --destructive-foreground: 0.12 0.01 0;
+        
+        --border: 0.25 0.015 0;
+        --input: 0.25 0.015 0;
+        --ring: 0.5 0.01 0;
+        
+        /* Chart colors - lighter monochrome for dark mode */
+        --chart-1: 0.7 0.015 0;
+        --chart-2: 0.6 0.012 0;
+        --chart-3: 0.5 0.01 0;
+        --chart-4: 0.8 0.018 0;
+        --chart-5: 0.4 0.008 0;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-bold tracking-tight;
+    }
+}
